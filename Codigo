@@ -1,0 +1,146 @@
+using System;
+using System.Collections.Generic;
+
+namespace MisEjercicios
+{
+    // Mi clase principal para agrupar todos los ejercicios
+    public class Ejercicios
+    {
+        // Método para contar ocurrencias de cada elemento en una lista
+        public static Dictionary<int, int> ContarOcurrencias(List<int> lista)
+        {
+            // Inicializo el diccionario que usaremos para contar
+            Dictionary<int, int> contador = new Dictionary<int, int>();
+
+            // Recorro cada elemento en la lista
+            foreach (int elemento in lista)
+            {
+                // Verifico si el elemento ya está en el diccionario
+                if (contador.ContainsKey(elemento))
+                {
+                    // Incremento el conteo del elemento
+                    contador[elemento]++;
+                }
+                else
+                {
+                    // Agrego el elemento al diccionario con un conteo inicial de 1
+                    contador[elemento] = 1;
+                }
+            }
+
+            // Devuelvo el diccionario con los conteos de cada elemento
+            return contador;
+        }
+
+        // Método para determinar si un string es un palíndromo
+        public static bool EsPalindromo(string palabra)
+        {
+            // Uso dos punteros, uno al inicio y otro al final de la palabra
+            int inicio = 0;
+            int fin = palabra.Length - 1;
+
+            // Comparo los caracteres desde el inicio y el final hacia el centro
+            while (inicio < fin)
+            {
+                // Si encuentro un par de caracteres que no coinciden, no es palíndromo
+                if (palabra[inicio] != palabra[fin])
+                {
+                    return false;
+                }
+
+                // Muevo los punteros
+                inicio++;
+                fin--;
+            }
+
+            // Si pasamos el ciclo sin encontrar diferencias, es un palíndromo
+            return true;
+        }
+
+        // Método para reemplazar caracteres en un string
+        public static string ReemplazarCaracteres(string texto, string buscar, string reemplazar)
+        {
+            // Verifico si los textos de búsqueda y reemplazo son válidos
+            if (string.IsNullOrEmpty(buscar) || string.IsNullOrEmpty(reemplazar))
+            {
+                return texto;
+            }
+
+            // Inicializo un resultado con el texto original
+            string resultado = texto;
+
+            // Recorro cada carácter en la cadena de búsqueda
+            for (int i = 0; i < buscar.Length; i++)
+            {
+                // Reemplazo cada carácter de la cadena de búsqueda con el correspondiente en la cadena de reemplazo
+                resultado = resultado.Replace(buscar[i], reemplazar[i]);
+            }
+
+            // Devuelvo el texto con los reemplazos
+            return resultado;
+        }
+
+        // Método para eliminar vocales de una lista de palabras
+        public static List<string> EliminarVocales(List<string> palabras)
+        {
+            // Defino las vocales que vamos a eliminar
+            string vocales = "aeiouAEIOU";
+            List<string> resultado = new List<string>();
+
+            // Recorro cada palabra en la lista
+            foreach (string palabra in palabras)
+            {
+                // Inicializo un string para almacenar la palabra sin vocales
+                string palabraSinVocales = "";
+
+                // Recorro cada carácter de la palabra
+                foreach (char c in palabra)
+                {
+                    // Si el carácter no es una vocal, lo agrego a la nueva palabra
+                    if (!vocales.Contains(c))
+                    {
+                        palabraSinVocales += c;
+                    }
+                }
+
+                // Agrego la palabra sin vocales a la lista de resultados
+                resultado.Add(palabraSinVocales);
+            }
+
+            // Devuelvo la lista con las palabras sin vocales
+            return resultado;
+        }
+
+        static void Main(string[] args)
+        {
+            // Pruebo el método de contar ocurrencias
+            var lista = new List<int> { 10, 10, 2, 6, 70, 5 };
+            var ocurrencias = ContarOcurrencias(lista);
+            Console.WriteLine("Conteo de ocurrencias:");
+            foreach (var kvp in ocurrencias)
+            {
+                Console.WriteLine($"Elemento: {kvp.Key}, Ocurrencias: {kvp.Value}");
+            }
+
+            // Pruebo el método de verificar si es palíndromo
+            string palabra = "abba";
+            bool esPalindromo = EsPalindromo(palabra);
+            Console.WriteLine($"¿La palabra '{palabra}' es palíndromo? {esPalindromo}");
+
+            // Pruebo el método de reemplazar caracteres
+            string texto = "mala sala en la casa";
+            string textoReemplazado = ReemplazarCaracteres(texto, "ala", "opo");
+            Console.WriteLine($"Texto original: {texto}");
+            Console.WriteLine($"Texto reemplazado: {textoReemplazado}");
+
+            // Pruebo el método de eliminar vocales
+            var palabras = new List<string> { "casa", "perro", "mouse" };
+            var palabrasSinVocales = EliminarVocales(palabras);
+            Console.WriteLine("Palabras sin vocales:");
+            foreach (var palabraSinVocal in palabrasSinVocales)
+            {
+                Console.WriteLine(palabraSinVocal);
+            }
+        }
+    }
+}
